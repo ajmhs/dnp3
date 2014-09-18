@@ -98,6 +98,12 @@ dnp3_src = \
 	src/opendnp3/DNP3/AlwaysOpeningVtoRouter.cpp \
 	src/opendnp3/DNP3/APDUConstants.cpp \
 	src/opendnp3/DNP3/APDU.cpp \
+	src/opendnp3/DNP3/APDUInfo.cpp \
+	src/opendnp3/DNP3/APDUInfoProvider.cpp \
+	src/opendnp3/DNP3/APDUListener.cpp \
+	src/opendnp3/DNP3/APDUProxy.cpp \
+	src/opendnp3/DNP3/APDUProxyImpl.cpp \
+	src/opendnp3/DNP3/APDUProxyStack.cpp \
 	src/opendnp3/DNP3/AppChannelStates.cpp \
 	src/opendnp3/DNP3/AppHeader.cpp \
 	src/opendnp3/DNP3/AppInterfaces.cpp \

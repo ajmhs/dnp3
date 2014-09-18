@@ -2,6 +2,7 @@
 
 #include <boost/asio.hpp>
 #include <iostream>
+#include <boost/asio/io_service.hpp>
 
 //using namespace boost::system;
 using namespace std;
@@ -9,8 +10,8 @@ using namespace std;
 namespace apl
 {
 
-const boost::system::error_code PhysicalLayerSyncProxy::mSuccessCode(boost::system::errc::success, boost::system::get_generic_category());
-const boost::system::error_code PhysicalLayerSyncProxy::mErrorCode(boost::system::errc::permission_denied, boost::system::get_generic_category());
+const boost::system::error_code PhysicalLayerSyncProxy::mSuccessCode(boost::system::errc::success, boost::system::generic_category());
+const boost::system::error_code PhysicalLayerSyncProxy::mErrorCode(boost::system::errc::permission_denied, boost::system::generic_category());
 
 PhysicalLayerSyncProxy::PhysicalLayerSyncProxy(Logger* apLogger, boost::asio::io_service* apService) :
 	PhysicalLayerAsyncBase(apLogger),

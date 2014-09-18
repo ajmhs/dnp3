@@ -23,14 +23,7 @@
 #include <opendnp3/APL/FlexibleDataObserver.h>
 #include <opendnp3/DNP3/AsyncStackManager.h>
 
-
-namespace boost
-{
-namespace asio
-{
-class io_service;
-}
-}
+#include <boost/asio/io_service.hpp>
 
 namespace apl
 {

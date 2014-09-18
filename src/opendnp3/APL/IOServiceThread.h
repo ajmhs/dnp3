@@ -22,14 +22,7 @@
 #include "Thread.h"
 #include "TimerSourceASIO.h"
 #include "Loggable.h"
-
-namespace boost
-{
-namespace asio
-{
-class io_service;
-}
-}
+#include <boost/asio/io_service.hpp>
 
 namespace apl
 {

@@ -9,14 +9,7 @@
 #include <iostream>
 #include <queue>
 #include <boost/system/error_code.hpp>
-
-namespace boost
-{
-namespace asio
-{
-class io_service;
-}
-}
+#include <boost/asio/io_service.hpp>
 
 namespace apl
 {

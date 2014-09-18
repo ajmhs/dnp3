@@ -5,14 +5,7 @@
 #include <opendnp3/APL/PhysicalLayerAsyncTCPServer.h>
 
 #include "PhysicalLayerWrapper.h"
-
-namespace boost
-{
-namespace asio
-{
-class io_service;
-}
-}
+#include <boost/asio/io_service.hpp>
 
 namespace apl
 {

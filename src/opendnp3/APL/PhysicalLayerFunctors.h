@@ -20,14 +20,7 @@
 #define __PHYSICAL_LAYER_FUNCTORS_H_
 
 #include <boost/function.hpp>
-
-namespace boost
-{
-namespace asio
-{
-class io_service;
-}
-}
+#include <boost/asio/io_service.hpp>
 
 namespace apl
 {

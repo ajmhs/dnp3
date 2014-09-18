@@ -28,6 +28,7 @@
 #include <opendnp3/DNP3/LinkLayerRouter.h>
 #include <opendnp3/DNP3/ILinkContext.h>
 #include <opendnp3/DNP3/LinkFrame.h>
+#include <boost/asio/io_service.hpp>
 
 namespace APLXML_MTS
 {
@@ -36,13 +37,6 @@ class MasterTestSet_t;
 namespace apl
 {
 class Logger;
-}
-namespace boost
-{
-namespace asio
-{
-class io_service;
-}
 }
 
 namespace apl

@@ -20,14 +20,7 @@
 #define __PHYSICAL_LAYER_ASYNC_ASIO_H_
 
 #include "PhysicalLayerAsyncBase.h"
-
-namespace boost
-{
-namespace asio
-{
-class io_service;
-}
-}
+#include <boost/asio/io_service.hpp>
 
 namespace apl
 {

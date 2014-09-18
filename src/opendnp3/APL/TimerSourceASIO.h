@@ -22,16 +22,11 @@
 #include "ITimerSource.h"
 #include "Lock.h"
 #include "Exception.h"
-
+#include <boost/asio/io_service.hpp>
 #include <queue>
 
 namespace boost
 {
-
-namespace asio
-{
-class io_service;
-}
 namespace system
 {
 class error_code;
