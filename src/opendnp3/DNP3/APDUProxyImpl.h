@@ -40,13 +40,13 @@ limitations under the License.
 
 #include <boost/thread.hpp>
 
-#include <opendnp3/APL/Logger.h>
-#include <opendnp3/APL/Loggable.h>
-#include <opendnp3/APL/LogTypes.h>
+#include <APL/Logger.h>
+#include <APL/Loggable.h>
+#include <APL/LogTypes.h>
 
-#include "opendnp3/APL/Lock.h"
-#include "opendnp3/APL/IOService.h"
-#include "opendnp3/APL/TimerSourceASIO.h"
+#include "APL/Lock.h"
+#include "APL/IOService.h"
+#include "APL/TimerSourceASIO.h"
 
 #include "AppLayer.h"
 #include "APDUProxy.h"
