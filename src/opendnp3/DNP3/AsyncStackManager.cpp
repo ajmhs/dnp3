@@ -151,6 +151,26 @@ IDataObserver* AsyncStackManager::AddSlave( const std::string& arPortName, const
 	return pSlave->mSlave.GetDataObserver();
 }
 
+APDUProxyStack* AsyncStackManager::AddProxyStack(
+		const std::string& portName,
+		const std::string& stackName,
+		FilterLevel logLevel,
+		APDUProxyStackConfig& config) {
+	LinkChannel* channel = this->GetOrCreateChannel(portName);
+	Logger* logger = mpLogger->GetSubLogger(stackName, logLevel);
+	logger->SetVarName(stackName);
+
+	/*cout << "###################### AsyncStackManager src=" << config.app.RemoteAddr << ", isMaster=" << config.app.IsMaster << " dest=" << config.app.LocalAddr << "\n";*/
+
+	APDUProxyStack* proxyStack = new APDUProxyStack(stackName, logger,
+			&mTimerSrc, config);
+
+	LinkRoute route(config.link.RemoteAddr, config.link.LocalAddr);
+	this->AddStackToChannel(stackName, proxyStack, channel, route);
+
+	return proxyStack;
+}
+
 void AsyncStackManager::AddVtoChannel(const std::string& arStackName,
                                       IVtoCallbacks* apCallbacks)
 {
