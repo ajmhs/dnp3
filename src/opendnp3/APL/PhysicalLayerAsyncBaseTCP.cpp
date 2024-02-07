@@ -23,14 +23,13 @@
 #include <string>
 #include <boost/asio.hpp>
 #include <boost/asio/ip/tcp.hpp>
+#include <boost/asio/ip/address.hpp>
 
 #include "Exception.h"
 #include "IHandlerAsync.h"
 #include "Logger.h"
 
-using namespace boost;
-using namespace boost::asio;
-using namespace boost::system;
+
 using namespace std;
 
 namespace apl
@@ -53,7 +52,7 @@ void PhysicalLayerAsyncBaseTCP::DoClose()
 
 void PhysicalLayerAsyncBaseTCP::DoAsyncRead(boost::uint8_t* apBuffer, size_t aMaxBytes)
 {
-	mSocket.async_read_some(buffer(apBuffer, aMaxBytes),
+	mSocket.async_read_some(boost::asio::buffer(apBuffer, aMaxBytes),
 	                        boost::bind(&PhysicalLayerAsyncBaseTCP::OnReadCallback,
 	                                    this,
 	                                    boost::asio::placeholders::error,
@@ -63,7 +62,7 @@ void PhysicalLayerAsyncBaseTCP::DoAsyncRead(boost::uint8_t* apBuffer, size_t aMa
 
 void PhysicalLayerAsyncBaseTCP::DoAsyncWrite(const boost::uint8_t* apBuffer, size_t aNumBytes)
 {
-	async_write(mSocket, buffer(apBuffer, aNumBytes),
+	async_write(mSocket, boost::asio::buffer(apBuffer, aNumBytes),
 	            boost::bind(&PhysicalLayerAsyncBaseTCP::OnWriteCallback,
 	                        this,
 	                        boost::asio::placeholders::error,
@@ -88,7 +87,7 @@ void PhysicalLayerAsyncBaseTCP::ShutdownSocket()
 {
 	boost::system::error_code ec;
 
-	mSocket.shutdown(ip::tcp::socket::shutdown_both, ec);
+	mSocket.shutdown(boost::asio::ip::tcp::socket::shutdown_both, ec);
 	if(ec) LOG_BLOCK(LEV_WARNING, "Error while shutting down socket: " << ec.message());
 }
 
@@ -96,7 +95,7 @@ boost::asio::ip::address PhysicalLayerAsyncBaseTCP::ResolveAddress(const std::st
 {
 	try {
 		boost::system::error_code ec;
-		boost::asio::ip::address addr = boost::asio::ip::address::from_string(arEndpoint, ec);
+		boost::asio::ip::address addr = boost::asio::ip::make_address(arEndpoint, ec);
 		if (ec)
 			throw ArgumentException(LOCATION, "endpoint: " + arEndpoint + " is invalid");
 		return addr;

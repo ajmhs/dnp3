@@ -17,12 +17,11 @@
 
 #include <sstream>
 
-#include <boost/test/unit_test_suite_impl.hpp>
 #include <boost/test/results_collector.hpp>
 #include <boost/test/utils/basic_cstring/io.hpp>
 #include <boost/test/unit_test_log.hpp>
 #include <boost/test/included/unit_test.hpp>
-
+#include <boost/test/execution_monitor.hpp>
 #include "teamcity_messages.h"
 
 using namespace boost::unit_test;
@@ -42,7 +41,7 @@ public:
     
     void log_start(std::ostream&, boost::unit_test::counter_t test_cases_amount);
     void log_finish(std::ostream&);
-    void log_build_info(std::ostream&);
+    void log_build_info(std::ostream&, bool log_build_info);
 
     void test_unit_start(std::ostream&, boost::unit_test::test_unit const& tu);
     void test_unit_finish(std::ostream&,
@@ -54,11 +53,21 @@ public:
         boost::unit_test::log_checkpoint_data const&,
         boost::unit_test::const_string explanation);
 
+    void log_exception_start(std::ostream&, 
+        boost::unit_test::log_checkpoint_data const&, 
+        boost::execution_exception const&);
+
+    void log_exception_finish(std::ostream&);
+
     void log_entry_start(std::ostream&,
         boost::unit_test::log_entry_data const&,
         log_entry_types let);
     void log_entry_value(std::ostream&, boost::unit_test::const_string value);
     void log_entry_finish(std::ostream&);
+
+    void entry_context_start(std::ostream&, boost::unit_test::log_level);
+    void log_entry_context(std::ostream&, boost::unit_test::log_level, boost::unit_test::const_string);
+    void entry_context_finish(std::ostream&, boost::unit_test::log_level);
 };
 
 // Fake fixture to register formatter
@@ -95,13 +104,13 @@ void TeamcityBoostLogFormatter::log_start(ostream &out, counter_t test_cases_amo
 void TeamcityBoostLogFormatter::log_finish(ostream &out)
 {}
 
-void TeamcityBoostLogFormatter::log_build_info(ostream &out)
+void TeamcityBoostLogFormatter::log_build_info(ostream &out, bool log_build_info)
 {}
 
 void TeamcityBoostLogFormatter::test_unit_start(ostream &out, test_unit const& tu) {
     messages.setOutput(out);
 
-    if (tu.p_type == tut_case) {
+    if (tu.p_type == TUT_CASE) {
         messages.testStarted(tu.p_name, flowId);
     } else {
         messages.suiteStarted(tu.p_name, flowId);
@@ -114,7 +123,7 @@ void TeamcityBoostLogFormatter::test_unit_finish(ostream &out, test_unit const& 
     messages.setOutput(out);
 
     test_results const& tr = results_collector.results(tu.p_id);
-    if (tu.p_type == tut_case) {
+    if (tu.p_type == TUT_CASE) {
         if(!tr.passed()) {
             if(tr.p_skipped) {
                 messages.testIgnored(tu.p_name, "ignored", flowId);
@@ -141,6 +150,12 @@ void TeamcityBoostLogFormatter::log_exception(ostream &out, log_checkpoint_data 
     currentDetails += what + "\n";
 }
 
+void TeamcityBoostLogFormatter::log_exception_start(ostream &out, log_checkpoint_data const&, boost::execution_exception const&) 
+{}
+
+void TeamcityBoostLogFormatter::log_exception_finish(std::ostream&)
+{}
+
 void TeamcityBoostLogFormatter::log_entry_start(ostream&, log_entry_data const&, log_entry_types let)
 {}
 
@@ -153,5 +168,14 @@ void TeamcityBoostLogFormatter::log_entry_finish(ostream &out) {
     out << endl;
     currentDetails += "\n";
 }
+
+void TeamcityBoostLogFormatter::entry_context_start(std::ostream &out, boost::unit_test::log_level level)
+{}
+
+void TeamcityBoostLogFormatter::log_entry_context(std::ostream &out, boost::unit_test::log_level level, boost::unit_test::const_string str)
+{}
+
+void TeamcityBoostLogFormatter::entry_context_finish(std::ostream &out, boost::unit_test::log_level level)
+{}
 
 }

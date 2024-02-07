@@ -18,14 +18,7 @@
 //
 #ifndef __TRANSPORT_STACK_PAIR_H_
 #define __TRANSPORT_STACK_PAIR_H_
-
-namespace boost
-{
-namespace asio
-{
-class io_service;
-}
-}
+#include <boost/asio/io_service.hpp>
 
 
 #include <opendnp3/APL/PhysicalLayerAsyncTCPClient.h>

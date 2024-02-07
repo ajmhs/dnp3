@@ -31,7 +31,7 @@ MockPhysicalLayerAsyncTS::MockPhysicalLayerAsyncTS(Logger* apLogger, MockTimerSo
 	PhysicalLayerAsyncBase(apLogger),
 	mpTimerSrc(apTimerSrc),
 	mpOpenTimer(NULL),
-	mErrorCode(errc::permission_denied, get_generic_category()),
+	mErrorCode(errc::permission_denied, generic_category()),
 	mWriteBuffer(1024)
 {
 	this->Reset();

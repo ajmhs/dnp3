@@ -19,14 +19,7 @@
 #ifndef __IO_SERVICE_H_
 #define __IO_SERVICE_H_
 
-namespace boost
-{
-namespace asio
-{
-class io_service;
-}
-}
-
+#include <boost/asio/io_service.hpp>
 
 namespace apl
 {

@@ -41,7 +41,7 @@ LoopbackPhysicalLayerAsync::LoopbackPhysicalLayerAsync(Logger* apLogger, boost::
 void LoopbackPhysicalLayerAsync::DoOpen()
 {
 	//always open successfully
-	error_code ec(errc::success, get_generic_category());
+	error_code ec(errc::success, generic_category());
 	mpService->post(bind(&LoopbackPhysicalLayerAsync::OnOpenCallback, this, ec));
 }
 
@@ -58,7 +58,7 @@ void LoopbackPhysicalLayerAsync::DoClose()
 	//dispatch any pending reads with failures
 	if(mReadSize > 0) {
 		mReadSize = 0;
-		error_code ec(errc::permission_denied, get_generic_category());
+		error_code ec(errc::permission_denied, generic_category());
 		mpService->post(bind(&LoopbackPhysicalLayerAsync::OnReadCallback, this, ec, mpReadBuff, 0));
 	}
 }
@@ -77,7 +77,7 @@ void LoopbackPhysicalLayerAsync::DoAsyncWrite(const boost::uint8_t* apData, size
 	for(size_t i = 0; i < aNumBytes; ++i) mWritten.push_back(apData[i]);
 
 	//always write successfully
-	error_code ec(errc::success, get_generic_category());
+	error_code ec(errc::success, generic_category());
 	mpService->post(bind(&LoopbackPhysicalLayerAsync::OnWriteCallback, this, ec, aNumBytes));
 
 	//now check to see if this write will dispatch a read
@@ -96,7 +96,7 @@ void LoopbackPhysicalLayerAsync::CheckForReadDispatch()
 
 		mReadSize = 0;
 
-		error_code ec(errc::success, get_generic_category());
+		error_code ec(errc::success, generic_category());
 		mpService->post(bind(&LoopbackPhysicalLayerAsync::OnReadCallback, this, ec, mpReadBuff, num));
 	}
 

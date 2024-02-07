@@ -43,6 +43,17 @@ AppLayer::AppLayer(apl::Logger* apLogger, ITimerSource* apTimerSrc, AppConfig aA
 	mNumRetry(aAppCfg.NumRetry)
 {
 	mConfirm.SetFunction(FC_CONFIRM);
+
+	APDUInfo info;
+	info.master = !aAppCfg.IsMaster;
+	info.src = aAppCfg.RemoteAddr;
+	info.dest = aAppCfg.LocalAddr;
+	mIncoming.SetInfo(&info);
+
+	/*cout << "###################### AppLayer  incomingAPDU: src=" << info.src
+			<< " (" << aAppCfg.RemoteAddr << ") isMaster=" << info.master
+			<< " (" << aAppCfg.IsMaster << "), dest=" << info.dest << " ("
+			<< aAppCfg.LocalAddr << ")\n";*/
 }
 
 void AppLayer::SetUser(IAppUser* apUser)
@@ -122,10 +133,12 @@ void AppLayer::_OnReceive(const boost::uint8_t* apBuffer, size_t aSize)
 			this->OnRequest(ctrl, mIncoming);
 			break;
 		}
-	} catch(ObjectException oex) {
+	}
+	catch(ObjectException oex) {
 		EXCEPTION_BLOCK(LEV_WARNING, oex);
 		this->OnUnknownObject(mIncoming.GetFunction(), mIncoming.GetControl());
-	} catch(Exception ex) {
+	}
+	catch(Exception ex) {
 		EXCEPTION_BLOCK(LEV_WARNING, ex);
 	}
 }
@@ -163,11 +176,13 @@ void AppLayer::OnSendResult(bool aSuccess)
 	if(func == FC_CONFIRM) {
 		assert(mConfirmSending);
 		mConfirmSending = false;
-	} else {
+	}
+	else {
 		if(aSuccess) {
 			if(func == FC_UNSOLICITED_RESPONSE) mUnsolicited.OnSendSuccess();
 			else mSolicited.OnSendSuccess();
-		} else {
+		}
+		else {
 			if(func == FC_UNSOLICITED_RESPONSE) mUnsolicited.OnSendFailure();
 			else mSolicited.OnSendFailure();
 		}
@@ -230,7 +245,8 @@ void AppLayer::OnConfirm(const AppControlField& arCtrl, APDU& arAPDU)
 			throw Exception(LOCATION, ALERR_UNEXPECTED_CONFIRM);
 
 		mUnsolicited.OnConfirm(arCtrl.SEQ);
-	} else {
+	}
+	else {
 		mSolicited.OnConfirm(arCtrl.SEQ);
 	}
 }

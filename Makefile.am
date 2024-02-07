@@ -8,7 +8,7 @@ ACLOCAL_AMFLAGS = -I config/autotools/m4
 CORE_BOOST_LIBS  = $(BOOST_DATE_TIME_LIB) $(BOOST_THREAD_LIB) $(BOOST_PROGRAM_OPTIONS_LIB) $(BOOST_SYSTEM_LIB)
 TEST_BOOST_LIBS  = $(CORE_BOOST_LIBS) $(BOOST_UNIT_TEST_FRAMEWORK_LIB)
 
-AM_CXXFLAGS = -I$(srcdir)/src/ $(BOOST_CPPFLAGS) -DBOOST_TEST_DYN_LINK -DBOOST_ASIO_ENABLE_CANCELIO -DBOOST_REGEX_NO_LIB
+AM_CXXFLAGS = -I$(srcdir)/src/ -fPIC $(BOOST_CPPFLAGS) -DBOOST_TEST_DYN_LINK -DBOOST_ASIO_ENABLE_CANCELIO -DBOOST_REGEX_NO_LIB
 AM_LDFLAGS  = $(BOOST_LDFLAGS)
 
 # Dummy placeholder to allow for expansion later
@@ -98,6 +98,12 @@ dnp3_src = \
 	src/opendnp3/DNP3/AlwaysOpeningVtoRouter.cpp \
 	src/opendnp3/DNP3/APDUConstants.cpp \
 	src/opendnp3/DNP3/APDU.cpp \
+	src/opendnp3/DNP3/APDUInfo.cpp \
+	src/opendnp3/DNP3/APDUInfoProvider.cpp \
+	src/opendnp3/DNP3/APDUListener.cpp \
+	src/opendnp3/DNP3/APDUProxy.cpp \
+	src/opendnp3/DNP3/APDUProxyImpl.cpp \
+	src/opendnp3/DNP3/APDUProxyStack.cpp \
 	src/opendnp3/DNP3/AppChannelStates.cpp \
 	src/opendnp3/DNP3/AppHeader.cpp \
 	src/opendnp3/DNP3/AppInterfaces.cpp \

@@ -20,14 +20,7 @@
 #define __ASYNC_TEST_OBJECT_ASIO_H_
 
 #include <opendnp3/APL/test/util/AsyncTestObject.h>
-
-namespace boost
-{
-namespace asio
-{
-class io_service;
-}
-}
+#include <boost/asio/io_service.hpp>
 
 namespace apl
 {
